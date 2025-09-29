@@ -4,8 +4,8 @@ import { defineConfig } from "vite";
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: "/memcrab/",
   plugins: [react()],
-  base: "/my-memcrab/",
   server: {
     port: 3000,
   },
