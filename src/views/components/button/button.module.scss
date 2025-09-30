@@ -1,0 +1,36 @@
+.button {
+  margin-top: 0.5rem;
+  padding: 0.7rem;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: background 0.2s ease;
+}
+
+.button--primary {
+  background: var(--color-primary);
+
+  &:hover {
+    background: var(--color-primary-hover);
+  }
+}
+
+.button--danger {
+  background: var(--color-danger);
+
+  &:hover {
+    background: var(--color-danger-hover);
+  }
+}
+
+.button--success {
+  background: var(--color-success);
+
+  &:hover {
+    background: var(--color-success-hover);
+  }
+}

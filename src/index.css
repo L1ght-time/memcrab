@@ -10,8 +10,11 @@
   --color-bg-white: #fff;
   --color-border: #ccc;
   --color-border-focus: #3b82f6;
-  --color-btn-primary: #3b82f6;
-  --color-btn-primary-hover: #2563eb;
-  --color-btn-disabled: #94a3b8;
+  --color-primary: #3b82f6;
+  --color-primary-hover: #2563eb;
+  --color-danger: #e34f65;
+  --color-danger-hover: #e41f49;
+  --color-success: #44c973;
+  --color-success-hover: #3da04e;
   --color-text-dark: #111827;
 }

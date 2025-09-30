@@ -37,25 +37,4 @@
       border-color: var(--color-border-focus);
     }
   }
-
-  button {
-    margin-top: 0.5rem;
-    padding: 0.7rem;
-    border: none;
-    border-radius: 8px;
-    background: var(--color-btn-primary);
-    color: #fff;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.2s ease;
-
-    &:hover:not(:disabled) {
-      background: var(--color-btn-primary-hover);
-    }
-
-    &:disabled {
-      background: var(--color-btn-disabled);
-      cursor: not-allowed;
-    }
-  }
 }

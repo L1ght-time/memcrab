@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 
+import { Button } from "~/views/components/button/button";
 import styles from "./table-setup-form.module.scss";
 
 type TableSetupFormProps = {
@@ -70,7 +71,7 @@ export const TableSetupForm = (props: TableSetupFormProps) => {
           max={100}
           required
         />
-        <button type="submit">Generate Table</button>
+        <Button type="submit">Generate Table</Button>
       </form>
     </div>
   );

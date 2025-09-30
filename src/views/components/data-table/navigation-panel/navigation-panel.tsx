@@ -1,0 +1,31 @@
+import { IoIosAdd } from "react-icons/io";
+import { generateMatrix } from "~/utils/generateMatrix";
+import { Button } from "~/views/components/button/button";
+import { useDataTableContext } from "~/views/components/data-table/hooks/use-data-table-context";
+import styles from "./navigation-panel.module.scss";
+
+export const NavigationPanel = () => {
+  const { cols, setMatrix } = useDataTableContext();
+
+  const handleAddRow = () => {
+    setMatrix((prev) => {
+      const newRowIndex = prev.length;
+
+      const newRow = generateMatrix({ rows: 1, cols })[0].map(
+        (cell, columnIndex) => ({
+          ...cell,
+          id: newRowIndex * cols + columnIndex + 1,
+        })
+      );
+      return [...prev, newRow];
+    });
+  };
+
+  return (
+    <div className={styles.navPanel}>
+      <Button onClick={handleAddRow}>
+        <IoIosAdd size={24} /> Add Row
+      </Button>
+    </div>
+  );
+};
