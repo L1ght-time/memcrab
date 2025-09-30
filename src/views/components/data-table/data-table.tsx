@@ -90,9 +90,9 @@ export const DataTable = () => {
                   <Button
                     variant="danger"
                     className={styles.removeRowBtn}
+                    Icon={() => <MdDelete size={16} />}
                     onClick={() => handleRemoveRow(rowIndex)}
                   >
-                    <MdDelete size={16} />
                     Delete
                   </Button>
                 </td>

@@ -6,9 +6,12 @@
   color: #fff;
   font-weight: 600;
   cursor: pointer;
+  transition: background 0.2s ease;
+}
+.withIcon {
   display: flex;
   align-items: center;
-  transition: background 0.2s ease;
+  gap: 0.2rem;
 }
 
 .button--primary {

@@ -29,9 +29,10 @@ export const NavigationPanel = () => {
       <Button
         onClick={handleAddRow}
         disabled={isDisabled}
+        Icon={() => <IoIosAdd size={24} />}
         className={clsx({ [styles.disabled]: isDisabled })}
       >
-        <IoIosAdd size={24} /> Add Row
+        Add Row
       </Button>
     </div>
   );
