@@ -8,12 +8,22 @@ import { useDataTableContext } from "~/views/components/data-table/hooks/use-dat
 import { NavigationPanel } from "~/views/components/data-table/navigation-panel/navigation-panel";
 import styles from "./data-table.module.scss";
 
+//TODO: Actually if our table has a lot of data,
+// we should handle it on the server side and to get data by parts or use virtualisation
+// if we handle our table on the client side. For example TanStack Virtual suggest such solution for such case.
+// We can load only part of data which user can see in the field of view.
+
 export const DataTable = () => {
-  const { matrix, setMatrix, cols } = useDataTableContext();
-  const rowSums = useMemo(
-    () => matrix.map((row) => row.reduce((sum, cell) => sum + cell.amount, 0)),
-    [matrix]
-  );
+  const { matrix, setMatrix, cols, hoveredSumCell, setHoveredSumCell } =
+    useDataTableContext();
+
+  const matrixData = useMemo(() => {
+    return matrix.map((row) => {
+      const sumCellsInRow = row.reduce((acc, cell) => acc + cell.amount, 0);
+      const maxCellAmountInRow = Math.max(...row.map((cell) => cell.amount));
+      return { row, sumCellsInRow, maxCellAmountInRow };
+    });
+  }, [matrix]);
 
   const percentileRow = useMemo(
     () => getPercentileRow({ matrix, percentile: 60 }),
@@ -37,32 +47,58 @@ export const DataTable = () => {
           </tr>
         </thead>
         <tbody>
-          {matrix.map((row, rowIndex) => (
-            <tr key={rowIndex}>
-              {row.map((cell, colIndex) => (
-                <DataTableCell
-                  key={cell.id}
-                  cell={cell}
-                  rowIndex={rowIndex}
-                  colIndex={colIndex}
-                  setMatrix={setMatrix}
+          {matrixData.map(
+            ({ row, maxCellAmountInRow, sumCellsInRow }, rowIndex) => (
+              <tr key={rowIndex}>
+                {row.map((cell, colIndex) => {
+                  const isSumHovered = hoveredSumCell === rowIndex;
+
+                  const displayValue = isSumHovered
+                    ? ((cell.amount / sumCellsInRow) * 100).toFixed(0) + "%"
+                    : cell.amount;
+
+                  const heatPercentage = isSumHovered
+                    ? (cell.amount / maxCellAmountInRow) * 100
+                    : 0;
+
+                  const background = isSumHovered
+                    ? `linear-gradient(to top, var(--color-heat) ${heatPercentage}%, transparent 0%)`
+                    : undefined;
+
+                  return (
+                    <DataTableCell
+                      key={cell.id}
+                      cell={cell}
+                      rowIndex={rowIndex}
+                      colIndex={colIndex}
+                      style={{
+                        background: isSumHovered ? background : undefined,
+                      }}
+                    >
+                      {displayValue}
+                    </DataTableCell>
+                  );
+                })}
+                <td
+                  className={styles.sum}
+                  onMouseEnter={() => setHoveredSumCell(rowIndex)}
+                  onMouseLeave={() => setHoveredSumCell(null)}
                 >
-                  {cell.amount}
-                </DataTableCell>
-              ))}
-              <td className={styles.sum}>{rowSums[rowIndex]}</td>
-              <td>
-                <Button
-                  variant="danger"
-                  className={styles.removeRowBtn}
-                  onClick={() => handleRemoveRow(rowIndex)}
-                >
-                  <MdDelete size={16} />
-                  Delete
-                </Button>
-              </td>
-            </tr>
-          ))}
+                  {sumCellsInRow}
+                </td>
+                <td>
+                  <Button
+                    variant="danger"
+                    className={styles.removeRowBtn}
+                    onClick={() => handleRemoveRow(rowIndex)}
+                  >
+                    <MdDelete size={16} />
+                    Delete
+                  </Button>
+                </td>
+              </tr>
+            )
+          )}
         </tbody>
         <tfoot>
           <tr>

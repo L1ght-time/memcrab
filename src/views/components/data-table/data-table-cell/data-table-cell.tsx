@@ -8,16 +8,15 @@ type DataTableCellProps = React.JSX.IntrinsicElements["td"] & {
   cell: { id: number; amount: number };
   rowIndex: number;
   colIndex: number;
-  setMatrix: React.Dispatch<React.SetStateAction<Cell[][]>>;
 };
 
 const highlightLimit = 5;
 
 export const DataTableCell = (props: DataTableCellProps) => {
-  const { cell, rowIndex, colIndex, children, setMatrix, className, ...rest } =
-    props;
+  const { cell, rowIndex, colIndex, children, className, ...rest } = props;
 
-  const { matrix, highlightedIds, setHighlightedIds } = useDataTableContext();
+  const { matrix, setMatrix, highlightedIds, setHighlightedIds } =
+    useDataTableContext();
 
   const handleIncreaseValue = () => {
     setMatrix((prev) =>
