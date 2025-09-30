@@ -13,6 +13,8 @@ type DataTableProviderProps = {
 type TableContextType = DataTableProviderProps & {
   matrix: Cell[][];
   setMatrix: React.Dispatch<React.SetStateAction<Cell[][]>>;
+  highlightedIds: Set<number>;
+  setHighlightedIds: React.Dispatch<React.SetStateAction<Set<number>>>;
 };
 
 export const DataTableContext = createContext<TableContextType | undefined>(
@@ -25,6 +27,7 @@ export const DataTableProvider: React.FC<
   const [matrix, setMatrix] = useState<Cell[][]>(() =>
     generateMatrix({ rows, cols })
   );
+  const [highlightedIds, setHighlightedIds] = useState<Set<number>>(new Set());
 
   useEffect(() => {
     if (matrix.length === 0) {
@@ -33,8 +36,24 @@ export const DataTableProvider: React.FC<
   }, [matrix, setTableSize]);
 
   const value = useMemo(
-    () => ({ matrix, setMatrix, rows, cols, setTableSize }),
-    [cols, matrix, rows, setMatrix, setTableSize]
+    () => ({
+      matrix,
+      setMatrix,
+      rows,
+      cols,
+      setTableSize,
+      highlightedIds,
+      setHighlightedIds,
+    }),
+    [
+      cols,
+      matrix,
+      rows,
+      setMatrix,
+      setTableSize,
+      highlightedIds,
+      setHighlightedIds,
+    ]
   );
 
   return (

@@ -3,7 +3,7 @@ import { useMemo } from "react";
 import { MdDelete } from "react-icons/md";
 import { getPercentileRow } from "~/utils/getPercentileRow";
 import { Button } from "~/views/components/button/button";
-import { DataTableCell } from "~/views/components/data-table/data-table-cell";
+import { DataTableCell } from "~/views/components/data-table/data-table-cell/data-table-cell";
 import { useDataTableContext } from "~/views/components/data-table/hooks/use-data-table-context";
 import { NavigationPanel } from "~/views/components/data-table/navigation-panel/navigation-panel";
 import styles from "./data-table.module.scss";
