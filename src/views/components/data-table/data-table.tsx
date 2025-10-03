@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 
 import { MdDelete } from "react-icons/md";
+import { stepsOptions } from "~/App";
 import type { Cell } from "~/utils/generateMatrix";
 import { getNearestCells } from "~/utils/getNearestCells";
 import { getPercentileRow } from "~/utils/getPercentileRow";
@@ -25,9 +26,15 @@ export const DataTable = () => {
     hoveredSumCell,
     setHoveredSumCell,
     setHighlightedIds,
+    setStep,
   } = useDataTableContext();
 
   const [hoveredCell, setHoveredCell] = useState<Cell | null>(null);
+
+  if (!matrix.length) {
+    setStep(stepsOptions.setup);
+  }
+
   const matrixData = useMemo(() => {
     return matrix.map((row) => {
       const sumCellsInRow = row.reduce((acc, cell) => acc + cell.amount, 0);

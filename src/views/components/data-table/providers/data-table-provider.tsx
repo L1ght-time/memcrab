@@ -8,6 +8,7 @@ type DataTableProviderProps = {
   setTableSize: React.Dispatch<
     React.SetStateAction<{ rows: string; cols: string } | null>
   >;
+  setStep: React.Dispatch<React.SetStateAction<"setup" | "table">>;
 };
 
 type TableContextType = DataTableProviderProps & {
@@ -25,7 +26,7 @@ export const DataTableContext = createContext<TableContextType | undefined>(
 
 export const DataTableProvider: React.FC<
   React.PropsWithChildren<DataTableProviderProps>
-> = ({ rows, cols, children, setTableSize }) => {
+> = ({ rows, cols, children, setTableSize, setStep }) => {
   const [matrix, setMatrix] = useState<Cell[][]>(() =>
     generateMatrix({ rows, cols })
   );
@@ -49,6 +50,7 @@ export const DataTableProvider: React.FC<
       setHighlightedIds,
       hoveredSumCell,
       setHoveredSumCell,
+      setStep,
     }),
     [
       cols,
@@ -60,6 +62,7 @@ export const DataTableProvider: React.FC<
       setHighlightedIds,
       hoveredSumCell,
       setHoveredSumCell,
+      setStep,
     ]
   );
 

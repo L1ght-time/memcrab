@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { useState } from "react";
 import { DataTableWithProvider } from "~/views/components/data-table/data-table-with-provider";
 import { TableSetupForm } from "~/views/forms/table-setup-form/table-setup-form";
@@ -7,7 +8,7 @@ type tableSizeType = {
   cols: string;
 } | null;
 
-const stepsOptions = {
+export const stepsOptions = {
   setup: "setup",
   table: "table",
 } as const;
@@ -29,6 +30,7 @@ const App = () => {
         rows={Number(tableSize.rows)}
         cols={Number(tableSize.cols)}
         setTableSize={setTableSize}
+        setStep={setStep}
       />
     ),
   };

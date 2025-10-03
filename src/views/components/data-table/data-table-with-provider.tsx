@@ -7,14 +7,11 @@ type DataTableWithProviderProps = {
   setTableSize: React.Dispatch<
     React.SetStateAction<null | { rows: string; cols: string }>
   >;
+  setStep: React.Dispatch<React.SetStateAction<"setup" | "table">>;
 };
 
-export const DataTableWithProvider = (props: DataTableWithProviderProps) => {
-  const { rows, cols, setTableSize } = props;
-
-  return (
-    <DataTableProvider rows={rows} cols={cols} setTableSize={setTableSize}>
-      <DataTable />
-    </DataTableProvider>
-  );
-};
+export const DataTableWithProvider = (props: DataTableWithProviderProps) => (
+  <DataTableProvider {...props}>
+    <DataTable />
+  </DataTableProvider>
+);
