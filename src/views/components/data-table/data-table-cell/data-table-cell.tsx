@@ -1,5 +1,4 @@
 import clsx from "clsx";
-import { useMemo } from "react";
 import type { Cell } from "~/utils/generateMatrix";
 import { useDataTableContext } from "~/views/components/data-table/hooks/use-data-table-context";
 import styles from "./data-table-cell.module.scss";
@@ -8,14 +7,22 @@ type DataTableCellProps = React.JSX.IntrinsicElements["td"] & {
   cell: { id: number; amount: number };
   rowIndex: number;
   colIndex: number;
+  flatCells: Cell[];
+  onHoveredCell: (cell: Cell | null) => void;
 };
 
-const highlightLimit = 5;
-
 export const DataTableCell = (props: DataTableCellProps) => {
-  const { cell, rowIndex, colIndex, children, className, ...rest } = props;
+  const {
+    cell,
+    rowIndex,
+    colIndex,
+    children,
+    className,
+    onHoveredCell,
+    ...rest
+  } = props;
 
-  const { matrix, setMatrix, highlightedIds, setHighlightedIds } =
+  const { setMatrix, highlightedIds, setHighlightedIds } =
     useDataTableContext();
 
   const handleIncreaseValue = () => {
@@ -30,29 +37,15 @@ export const DataTableCell = (props: DataTableCellProps) => {
     );
   };
 
-  const flatCells = useMemo(() => matrix.flat(), [matrix]);
-
-  const handleMouseEnter = (hoveredCell: Cell) => {
-    const nearestCells = flatCells
-      .filter((cell) => cell.id !== hoveredCell.id)
-      .map((cell) => ({
-        id: cell.id,
-        diff: Math.abs(cell.amount - hoveredCell.amount),
-      }))
-      .sort((a, b) => a.diff - b.diff)
-      .slice(0, highlightLimit);
-
-    setHighlightedIds(new Set(nearestCells.map((cell) => cell.id)));
-  };
-
   const handleMouseLeave = () => {
     setHighlightedIds(new Set());
+    onHoveredCell(null);
   };
 
   return (
     <td
       onClick={handleIncreaseValue}
-      onMouseEnter={() => handleMouseEnter(cell)}
+      onMouseEnter={() => onHoveredCell(cell)}
       onMouseLeave={handleMouseLeave}
       className={clsx(
         styles.cell,

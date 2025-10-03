@@ -1,6 +1,8 @@
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { MdDelete } from "react-icons/md";
+import type { Cell } from "~/utils/generateMatrix";
+import { getNearestCells } from "~/utils/getNearestCells";
 import { getPercentileRow } from "~/utils/getPercentileRow";
 import { Button } from "~/views/components/button/button";
 import { DataTableCell } from "~/views/components/data-table/data-table-cell/data-table-cell";
@@ -13,10 +15,19 @@ import styles from "./data-table.module.scss";
 // if we handle our table on the client side. For example TanStack Virtual suggest such solution for such case.
 // We can load only part of data which user can see in the field of view.
 
-export const DataTable = () => {
-  const { matrix, setMatrix, cols, hoveredSumCell, setHoveredSumCell } =
-    useDataTableContext();
+const highlightLimit = 5;
 
+export const DataTable = () => {
+  const {
+    matrix,
+    setMatrix,
+    cols,
+    hoveredSumCell,
+    setHoveredSumCell,
+    setHighlightedIds,
+  } = useDataTableContext();
+
+  const [hoveredCell, setHoveredCell] = useState<Cell | null>(null);
   const matrixData = useMemo(() => {
     return matrix.map((row) => {
       const sumCellsInRow = row.reduce((acc, cell) => acc + cell.amount, 0);
@@ -33,6 +44,23 @@ export const DataTable = () => {
   const handleRemoveRow = (rowIndex: number) => {
     setMatrix((prev) => prev.filter((_, index) => index !== rowIndex));
   };
+
+  const flatCells = useMemo(() => matrix.flat(), [matrix]);
+
+  useEffect(() => {
+    if (!hoveredCell) {
+      setHighlightedIds(new Set());
+      return;
+    }
+
+    const nearestCells = getNearestCells({
+      hoveredCell,
+      flatCells,
+      highlightLimit,
+    });
+
+    setHighlightedIds(new Set(nearestCells.map((cell) => cell.id)));
+  }, [hoveredCell, setHighlightedIds, flatCells]);
 
   return (
     <div className={styles.wrapper}>
@@ -70,6 +98,8 @@ export const DataTable = () => {
                       key={cell.id}
                       cell={cell}
                       rowIndex={rowIndex}
+                      onHoveredCell={setHoveredCell}
+                      flatCells={flatCells}
                       colIndex={colIndex}
                       style={{
                         background: isSumHovered ? background : undefined,

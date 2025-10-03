@@ -1,5 +1,3 @@
-import clsx from "clsx";
-import { IoIosAdd } from "react-icons/io";
 import { generateMatrix } from "~/utils/generateMatrix";
 import { Button } from "~/views/components/button/button";
 import { useDataTableContext } from "~/views/components/data-table/hooks/use-data-table-context";
@@ -22,18 +20,13 @@ export const NavigationPanel = () => {
     });
   };
 
-  const isDisabled = matrix.length >= 100;
+  const isHideAddRowButton = matrix.length >= 100;
+
+  if (isHideAddRowButton) return null;
 
   return (
     <div className={styles.navPanel}>
-      <Button
-        onClick={handleAddRow}
-        disabled={isDisabled}
-        Icon={() => <IoIosAdd size={24} />}
-        className={clsx({ [styles.disabled]: isDisabled })}
-      >
-        Add Row
-      </Button>
+      <Button onClick={handleAddRow}>Add Row</Button>
     </div>
   );
 };
