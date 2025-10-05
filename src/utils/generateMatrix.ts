@@ -1,4 +1,4 @@
-export type Cell = { id: number; amount: number };
+import type { Cell } from "~/types/client/entities";
 
 type GenerateMatrixProps = {
   rows: number;

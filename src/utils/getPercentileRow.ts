@@ -1,7 +1,8 @@
+import type { Matrix } from "~/types/client/entities";
 import { getPercentileByColumn } from "~/utils/getPercentileByColumn";
 
 type getPercentileRowProps = {
-  matrix: { amount: number }[][];
+  matrix: Matrix;
   percentile: number;
 };
 

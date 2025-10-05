@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 
 import { MdDelete } from "react-icons/md";
 import { stepsOptions } from "~/constants";
-import type { Cell } from "~/utils/generateMatrix";
+import type { Cell } from "~/types/client/entities";
 import { getNearestCells } from "~/utils/getNearestCells";
 import { getPercentileRow } from "~/utils/getPercentileRow";
 import { Button } from "~/views/components/button/button";

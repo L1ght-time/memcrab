@@ -1,4 +1,4 @@
-import type { Cell } from "~/utils/generateMatrix";
+import type { Cell } from "~/types/client/entities";
 
 type GetNearestCellsProps = {
   hoveredCell: Cell;
