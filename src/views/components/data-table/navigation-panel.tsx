@@ -1,7 +1,7 @@
 import { generateMatrix } from "~/utils/generateMatrix";
 import { Button } from "~/views/components/button/button";
-import { useDataTableContext } from "~/views/components/data-table/hooks/use-data-table-context";
-import styles from "./navigation-panel.module.scss";
+import { useDataTableContext } from "~/views/components/data-table/use-data-table-context";
+import styles from "./data-table.module.scss";
 
 export const NavigationPanel = () => {
   const { matrix, cols, setMatrix } = useDataTableContext();

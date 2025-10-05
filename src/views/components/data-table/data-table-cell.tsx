@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import type { Cell } from "~/utils/generateMatrix";
-import { useDataTableContext } from "~/views/components/data-table/hooks/use-data-table-context";
-import styles from "./data-table-cell.module.scss";
+import { useDataTableContext } from "~/views/components/data-table/use-data-table-context";
+import styles from "./data-table.module.scss";
 
 type DataTableCellProps = React.JSX.IntrinsicElements["td"] & {
   cell: { id: number; amount: number };
