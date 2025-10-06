@@ -7,7 +7,6 @@ type DataTableCellProps = React.JSX.IntrinsicElements["td"] & {
   cell: Cell;
   rowIndex: number;
   colIndex: number;
-  flatCells: Cell[];
   onHoveredCell: (cell: Cell | null) => void;
 };
 

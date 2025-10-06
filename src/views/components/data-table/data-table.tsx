@@ -4,7 +4,7 @@ import { MdDelete } from "react-icons/md";
 import { stepsOptions } from "~/constants";
 import type { Cell } from "~/types/client/entities";
 import { getNearestCells } from "~/utils/getNearestCells";
-import { getPercentileRow } from "~/utils/getPercentileRow";
+import { getPercentile } from "~/utils/getPercentile";
 import { Button } from "~/views/components/button/button";
 import { DataTableCell } from "~/views/components/data-table/data-table-cell";
 import { NavigationPanel } from "~/views/components/data-table/navigation-panel";
@@ -44,7 +44,7 @@ export const DataTable = () => {
   }, [matrix]);
 
   const percentileRow = useMemo(
-    () => getPercentileRow({ matrix, percentile: 60 }),
+    () => getPercentile({ matrix, percentile: 60 }),
     [matrix]
   );
 
@@ -106,7 +106,6 @@ export const DataTable = () => {
                       cell={cell}
                       rowIndex={rowIndex}
                       onHoveredCell={setHoveredCell}
-                      flatCells={flatCells}
                       colIndex={colIndex}
                       style={{
                         background: isSumHovered ? background : undefined,
